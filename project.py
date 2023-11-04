@@ -26,20 +26,20 @@ def cleaning():
     data=data.dropna(subset=['help_useful','help_not_useful','comments'])
     data.to_csv('Cleaned_Data.csv',index=False)
     
-def preprocess():   #Here we will do Regex,Upper and Strip.
+def preprocess():   #Here we will do Regex,lower and Strip.
     data = pd.read_csv('cleaned_data.csv')
     def clean_comments(comment):
         pattern = r'[^a-zA-Z0-9\s]' 
         cleaned_comment = re.sub(pattern, ' ', str(comment))
         return cleaned_comment
-    def toupper(sentence):
-        upper_sentence=sentence.upper()
-        return upper_sentence
+    def tolower(sentence):
+        lower_sentence=sentence.lower()
+        return lower_sentence
     def stripenctence(sentence):
         sentence_strip= sentence.strip()
         return sentence_strip
     data['comments'] = data['comments'].apply(clean_comments)
-    data['comments']=data['comments'].apply(toupper)
+    data['comments']=data['comments'].apply(tolower)
     data['comments']=data['comments'].apply(stripenctence)
     data.to_csv('Final_data.csv',index=False)
 
